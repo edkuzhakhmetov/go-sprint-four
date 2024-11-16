@@ -82,6 +82,46 @@ func Test_meanSpeed(t *testing.T) {
 	}
 }
 
+func TestSwimmingMeanSpeed(t *testing.T) {
+	type args struct {
+		lengthPool int
+		countPool  int
+		duration   float64
+	}
+	tests := []struct {
+		name string
+		args args
+		want float64
+	}{
+		// TODO: Add test cases.
+		{
+			name: "Successful test",
+			args: args{
+				lengthPool: 100,
+				countPool:  4,
+				duration:   0.25,
+			},
+			want: 1.60,
+		},
+		{
+			name: "Null duration",
+			args: args{
+				lengthPool: 100,
+				countPool:  4,
+				duration:   0,
+			},
+			want: 0,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := swimmingMeanSpeed(tt.args.lengthPool, tt.args.countPool, tt.args.duration); got != tt.want {
+				t.Errorf("swimmingMeanSpeed() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestShowTrainingInfo(t *testing.T) {
 	type args struct {
 		action       int
@@ -167,6 +207,49 @@ func TestShowTrainingInfo(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := ShowTrainingInfo(tt.args.action, tt.args.trainingType, tt.args.duration, tt.args.weight, tt.args.height, tt.args.lengthPool, tt.args.countPool); got != tt.want {
 				t.Errorf("ShowTrainingInfo() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_WalkingSpentCalories(t *testing.T) {
+	type args struct {
+		action   int
+		duration float64
+		weight   float64
+		height   float64
+	}
+	tests := []struct {
+		name string
+		args args
+		want float64
+	}{
+		// TODO: Add test cases.
+		{
+			name: "Successful test",
+			args: args{
+				action:   4000,
+				duration: 1,
+				weight:   85,
+				height:   185,
+			},
+			want: 220.26694720864867,
+		},
+		{
+			name: "Null height",
+			args: args{
+				action:   4000,
+				duration: 1,
+				weight:   85,
+				height:   0,
+			},
+			want: 0,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := WalkingSpentCalories(tt.args.action, tt.args.duration, tt.args.weight, tt.args.height); got != tt.want {
+				t.Errorf("WalkingSpentCalories() = %v, want %v", got, tt.want)
 			}
 		})
 	}
